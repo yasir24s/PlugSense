@@ -35,7 +35,8 @@ answer is remembered per device model.
 
 ## Install
 
-1. Download `PlugSense-0.1.0.pkg` from [Releases](https://github.com/yasir24s/PlugSense/releases).
+1. Download the latest `PlugSense-<version>.pkg` from [Releases](https://github.com/yasir24s/PlugSense/releases).
+   If an older version is installed, quit PlugSense first (Quit in its popover); the installer replaces it.
 2. Open it. The installer is signed but not notarized, so macOS refuses it the first time: open
    **System Settings › Privacy & Security**, find the message about PlugSense, and click
    **Open Anyway**.
@@ -91,6 +92,7 @@ Requires Xcode 16 or later.
 swift test                     # the protocol's tests
 ./scripts/bundle.sh            # dist/PlugSense.app and dist/plugsense, universal
 ./scripts/package.sh           # dist/PlugSense-<version>.pkg; set SIGN_IDENTITY to sign it
+swift scripts/make-icon.swift  # redraws Resources/AppIcon.icns from code
 ```
 
 `swift run PlugSenseApp` runs the menu bar app unbundled, and `PlugSenseApp --render out.png`
@@ -102,6 +104,8 @@ draws its UI from live readings into a PNG.
 | `Sources/PlugSenseApp/` | The menu bar app: popover, popup, charge-or-data question |
 | `Sources/plugsense/` | The command-line tool |
 | `Tests/PlugSenseKitTests/` | The classifier's tests |
+| `scripts/` | Build, packaging and icon scripts |
+| `Resources/AppIcon.icns` | The app icon, drawn by `scripts/make-icon.swift` (no SF Symbols, whose license rules out app icons) |
 
 ## License
 

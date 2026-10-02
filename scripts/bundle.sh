@@ -4,7 +4,7 @@
 # IOPowerSources and, for iPhones and iPads, lockdown: it needs no entitlements or privacy grants.
 set -euo pipefail
 cd "$(dirname "$0")/.."
-version="${VERSION:-0.1.0}"
+version="${VERSION:-0.1.1}"
 
 arch=(-c release --arch arm64 --arch x86_64)
 swift build "${arch[@]}" --product PlugSenseApp
@@ -13,8 +13,9 @@ products=$(swift build "${arch[@]}" --show-bin-path)   # where it lands differs 
 
 app=dist/PlugSense.app
 rm -rf "$app" dist/plugsense
-mkdir -p "$app/Contents/MacOS"
+mkdir -p "$app/Contents/MacOS" "$app/Contents/Resources"
 cp "$products/PlugSenseApp" "$app/Contents/MacOS/PlugSense"
+cp Resources/AppIcon.icns "$app/Contents/Resources/"   # made by: swift scripts/make-icon.swift
 cp "$products/plugsense" dist/plugsense
 cat > "$app/Contents/Info.plist" <<PLIST
 <?xml version="1.0" encoding="UTF-8"?>
@@ -24,6 +25,7 @@ cat > "$app/Contents/Info.plist" <<PLIST
     <key>CFBundleName</key>                <string>PlugSense</string>
     <key>CFBundleIdentifier</key>          <string>com.plugsense.app</string>
     <key>CFBundleExecutable</key>          <string>PlugSense</string>
+    <key>CFBundleIconFile</key>            <string>AppIcon</string>
     <key>CFBundlePackageType</key>         <string>APPL</string>
     <key>CFBundleShortVersionString</key>  <string>$version</string>
     <key>CFBundleVersion</key>             <string>$version</string>
